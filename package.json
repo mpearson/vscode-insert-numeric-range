@@ -4,7 +4,7 @@
   "description": "Insert increasing numbers at each selection caret starting at 0. Hold shift to start at 1.",
   "publisher": "mpearson",
   "repository": "https://github.com/mpearson/vscode-insert-numeric-range",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.82.0"
   },

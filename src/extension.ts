@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from "vscode";
+import * as vscode from 'vscode';
 
 function insertNumbers(initialValue: number, step: number) {
   const editor = vscode.window.activeTextEditor;
@@ -27,23 +27,34 @@ function insertNumbers(initialValue: number, step: number) {
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.commands.registerCommand(
-    "insert-numeric-range.insertNumericRange",
+    'insert-numeric-range.insertNumericRange',
     async (initialValue?: number, step?: number) => {
+      let prevText = '';
       while (initialValue === undefined) {
-        const textValue = await vscode.window.showInputBox({
-          placeHolder: "Enter <start> or <start>:<step>",
+        let textValue = await vscode.window.showInputBox({
+          placeHolder: 'Enter <start> or <start>:<step> for the numeric sequence.',
+          value: prevText,
         });
-        if (textValue === "" || textValue === undefined) {
+        if (textValue === undefined) {
+          return;
+        }
+        textValue = textValue.trim();
+        if (textValue === '') {
           initialValue = 0;
         } else {
-          const chunks = textValue.split(":");
+          const chunks = textValue.split(':');
           if (chunks.length > 0) {
-            initialValue = Number.parseInt(chunks[0], 10);
+            if (chunks[0].trim() !== '') {
+              initialValue = Number.parseInt(chunks[0], 10);
+            } else {
+              initialValue = 0;
+            }
           }
-          if (chunks.length > 1) {
+          if (chunks.length > 1 && chunks[1].trim() !== '') {
             step = Number.parseInt(chunks[1], 10);
           }
         }
+        prevText = textValue;
       }
       insertNumbers(initialValue, step ?? 1);
     },
