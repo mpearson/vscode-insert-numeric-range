@@ -5,7 +5,7 @@
   "publisher": "mpearson",
   "repository": "https://github.com/mpearson/vscode-insert-numeric-range",
   "version": "0.0.2",
-  "icon": "icon.png",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.82.0"
   },
